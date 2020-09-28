@@ -34,6 +34,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/links/create', [LinksController::class, 'create'])->name('links.create');
 
     Route::post('/links', [LinksController::class, 'store'])->name('links.store');
+
+    Route::get('links/{link}', [LinksController::class, 'show'])->name('links.show');
+
+    Route::get('links/{link}/edit', [LinksController::class, 'edit'])->name('links.edit');
+
+    Route::patch('/links/{link}', [LinksController::class, 'update'])->name('links.update');
+
+    Route::delete('/links/{link}', [LinksController::class, 'destroy'])->name('links.destroy');
 });
 
 Route::middleware('guest')->group(function () {

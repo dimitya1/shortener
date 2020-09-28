@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Shorten link')
+@section('title', 'Edit link')
 
 @section('content')
     <ul class="nav nav-tabs nav-fill">
@@ -8,7 +8,7 @@
             <a class="nav-link" href="{{ route('links.index') }}">My links</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#">Shorten link</a>
+            <a class="nav-link" href="{{ route('links.create') }}">Shorten link</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
@@ -20,7 +20,15 @@
     <br>
 
 
-    <form method="post" action="{{ route('links.store') }}">
+    @if(Session::has('nothing to update'))
+        <div class="alert alert-warning" role="alert">
+            {{ Session::get('nothing to update') }}
+        </div>
+    @endif
+
+
+    <form method="post" action="{{ route('links.update', ['link' => $link]) }}">
+        @method('PATCH')
         @csrf
 
         <div class="form-group">
@@ -30,10 +38,18 @@
             </div>
             @enderror
             <label for="old_link">Link to shorten</label>
-            <input type="old_link" name="old_link" class="form-control">
+            <input type="old_link" name="old_link" class="form-control"
+                   value="{{ old('old_link', $link->old_link) }}">
         </div>
 
-        <button type="submit" class="btn btn-primary">Shorten</button>
+        <fieldset disabled>
+            <div class="form-group">
+                <label for="new_link">Shortened link</label>
+                <input type="text" id="disabledTextInput" class="form-control" placeholder="{{ old('new_link', $link->new_link) }}">
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary">Edit</button>
     </form>
 
 @endsection

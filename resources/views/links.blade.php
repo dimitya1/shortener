@@ -25,6 +25,16 @@
             {{ Session::get('successful link shorten') }}
         </div>
     @endif
+    @if(Session::has('successful link edit'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('successful link edit') }}
+        </div>
+    @endif
+    @if(Session::has('successful link delete'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('successful link delete') }}
+        </div>
+    @endif
 
 
     @forelse($links as $link)
@@ -32,26 +42,30 @@
             <div class="card-body">
                 <h4 class="card-title">Your perfect shortened link</h4>
                 <h4 class="card-title"><a href="{{ $link->new_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->new_link }}</a></h4>
-{{--                <h4 class="card-title"> <a href="{{ route('readone', ['id' => $ad->id]) }}">{{ $ad->title }}</a> </h4>--}}
                 <p class="card-text">Your previous long link</p>
                 <p class="card-text"><a href="{{ $link->old_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->old_link }}</a></p>
 
-{{--                @can('update', $ad)--}}
-{{--                    <a href="{{ route('ad.create', ['id' => $ad->id]) }}" class="btn btn-warning">Edit</a>--}}
-{{--                @endcan--}}
-{{--                @can('delete', $ad)--}}
-{{--                    <a href="{{ route('ad.delete', ['id' => $ad->id]) }}" class="btn btn-danger">Delete</a>--}}
-{{--                @endcan--}}
-
-            </div>
-            <div class="card-footer text-muted">
-                Shortened {{ $link->created_at->diffForHumans() }}
+                @can('view', $link)
+                    <a href="{{ route('links.show', ['link' => $link]) }}" class="btn btn-info" style="margin-bottom: 10px">More info</a>
+                @endcan
+                <div class="w-100"></div>
+                @can('update', $link)
+                    <a href="{{ route('links.edit', ['link' => $link]) }}" class="btn btn-warning" style="margin-bottom: 10px">Edit</a>
+                @endcan
+                @can('delete', $link)
+                    <form method="POST" action="{{ route('links.destroy', ['link' => $link]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                @endcan
             </div>
         </div>
     @empty
         <p>No links</p>
     @endforelse
 
+    <br>
     {{ $links->links() }}
-
+    <br>
 @endsection
