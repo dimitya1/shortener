@@ -17,7 +17,7 @@ class CreateLinksTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('old_link');
-            $table->string('new_link');
+            $table->string('new_link')->nullable();
             $table->integer('count')->default(0);
             $table->timestamps();
         });

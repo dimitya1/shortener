@@ -6,10 +6,10 @@
     @auth
     <ul class="nav nav-tabs nav-fill">
         <li class="nav-item">
-            <a class="nav-link" href="#">My links</a>
+            <a class="nav-link" href="{{ route('links.index') }}">My links</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Shorten link</a>
+            <a class="nav-link" href="{{ route('links.create') }}">Shorten link</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
@@ -35,7 +35,7 @@
         <hr class="my-4">
         <p>More value to your links</p>
         @auth
-            <a class="btn btn-primary btn-lg" href="#" role="button">Shorten new link</a>
+            <a class="btn btn-primary btn-lg" href="{{ route('links.create') }}" role="button">Shorten new link</a>
         @endauth
         @guest
             <a class="btn btn-primary btn-lg" href="{{ route('login') }}" role="button">Login</a>

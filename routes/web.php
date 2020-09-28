@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LinksController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,12 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/links', [LinksController::class, 'index'])->name('links.index');
+
+    Route::get('/links/create', [LinksController::class, 'create'])->name('links.create');
+
+    Route::post('/links', [LinksController::class, 'store'])->name('links.store');
 });
 
 Route::middleware('guest')->group(function () {
