@@ -32,7 +32,7 @@
             <p class="card-text">Your previous long link</p>
             <p class="card-text"><a href="{{ $link->old_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->old_link }}</a></p>
             @can('update', $link)
-                <a href="{{ route('links.edit', ['link' => $link]) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ route('links.edit', ['link' => $link]) }}" class="btn btn-warning" style="margin-bottom: 10px">Edit</a>
             @endcan
             @can('delete', $link)
                 <form method="POST" action="{{ route('links.destroy', ['link' => $link]) }}">

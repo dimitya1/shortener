@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+//        $this->app->singleton(\HillelDerish\UAadapter\UserAgentParserInterface::class, function (){
+//            return new \HillelDerish\UAadapter\HisorangeAdapter();
+////            return new \HillelDerish\UAadapter\DonatjAdapter();
+//        });
     }
 
     /**
@@ -25,4 +28,5 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinksController;
+use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -17,14 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-App::singleton(\HillelDerish\UAadapter\UserAgentParserInterface::class, function (){
-    return new \HillelDerish\UAadapter\HisorangeAdapter();
-//    return new \HillelDerish\UAadapter\DonatjAdapter();
-});
-
-
 Route::get('/', HomeController::class)->name('home');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -35,11 +29,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/links', [LinksController::class, 'store'])->name('links.store');
 
-    Route::get('links/{link}', [LinksController::class, 'show'])->name('links.show');
+    Route::middleware(\App\Http\Middleware\CheckLinkAuthorShow::class)->group(function () {
+        Route::get('links/{link}', [LinksController::class, 'show'])->name('links.show');
+    });
 
-    Route::get('links/{link}/edit', [LinksController::class, 'edit'])->name('links.edit');
+    Route::middleware(\App\Http\Middleware\CheckLinkAuthorEdit::class)->group(function () {
+        Route::get('links/{link}/edit', [LinksController::class, 'edit'])->name('links.edit');
 
-    Route::patch('/links/{link}', [LinksController::class, 'update'])->name('links.update');
+        Route::patch('/links/{link}', [LinksController::class, 'update'])->name('links.update');
+    });
 
     Route::delete('/links/{link}', [LinksController::class, 'destroy'])->name('links.destroy');
 });
@@ -50,22 +48,5 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'loginCheck']);
 });
 
-
-
-
-
-Route::get('/parse', function (\HillelDerish\UAadapter\UserAgentParserInterface $uaParser) {
-
-    $ip = '109.200.247.58';    //request()->ip();
-
-    $uaParser->parse();
-
-    $statistic = new \App\Models\Statistic();
-    $statistic->ip = $ip;
-    $statistic->browser = $uaParser->getBrowser() ?? null;
-    $statistic->engine = $uaParser->getEngine() ?? null;
-    $statistic->os = $uaParser->getOs() ?? null;
-    $statistic->device = $uaParser->getDevice() ?? null;
-    $statistic->save();
-});
+Route::get('/{id?}', [RedirectController::class, 'redirect'])->name('redirect');
 
