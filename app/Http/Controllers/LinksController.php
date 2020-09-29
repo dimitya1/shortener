@@ -28,7 +28,7 @@ final class LinksController
         $validator = Validator::make(
             request()->all(),
             [
-                'old_link' => 'required|min:14|max:255',
+                'old_link' => 'url|required|min:14|max:500',
             ]
         );
 
@@ -48,7 +48,8 @@ final class LinksController
 
         return redirect()
             ->route('links.index')
-            ->with('successful link shorten', "Link \"{$link->old_link}\" was successfully shortened");
+            ->with('successful link shorten', "Link \"{$link->old_link}\"
+             was successfully shortened to \"{$savedLink->new_link}\"");
     }
 
 
@@ -69,7 +70,7 @@ final class LinksController
         $validator = Validator::make(
             request()->all(),
             [
-                'old_link' => 'required|min:14|max:255',
+                'old_link' => 'url|required|min:14|max:500',
             ]
         );
 

@@ -23,6 +23,8 @@ final class RedirectController
         $statistic->save();
 
         $link = Link::find($id);
+        $link->count++;
+        $link->save();
         return redirect($link->old_link);
     }
 }
