@@ -47,4 +47,4 @@ In php-fpm container run migrations and seed database
 ```
 php artisan migrate --seed
 ```
-#### You can now access the server
+#### You can now access the server!
