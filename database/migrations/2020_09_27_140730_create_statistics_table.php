@@ -15,7 +15,7 @@ class CreateStatisticsTable extends Migration
     {
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable();
+            $table->foreignId('link_id');
             $table->ipAddress('ip');
             $table->string('browser')->nullable();
             $table->string('engine')->nullable();

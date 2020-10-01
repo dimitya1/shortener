@@ -22,15 +22,15 @@
 
     <div class="card" style="margin-bottom: 20px">
         <div class="card-body">
-            @if($link->count !== 0)
-                <h1><span class="badge badge-secondary">Used {{ $link->count }} times</span></h1>
-            @else
-                <h1><span class="badge badge-secondary">No uses</span></h1>
-            @endif
+{{--            @if($link->count !== 0)--}}
+{{--                <h1><span class="badge badge-secondary">Used {{ $link->count }} times</span></h1>--}}
+{{--            @else--}}
+{{--                <h1><span class="badge badge-secondary">No uses</span></h1>--}}
+{{--            @endif--}}
             <h4 class="card-title">Your perfect shortened link</h4>
-            <h4 class="card-title"><a href="{{ $link->new_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->new_link }}</a></h4>
+            <h4 class="card-title"><a href="{{  URL::to($link->id) }}" class="btn btn-link" role="button" aria-pressed="true">{{  URL::to($link->id) }}</a></h4>
             <p class="card-text">Your previous long link</p>
-            <p class="card-text"><a href="{{ $link->old_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->old_link }}</a></p>
+            <p class="card-text"><a href="{{ $link->long_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->long_link }}</a></p>
             @can('update', $link)
                 <a href="{{ route('links.edit', ['link' => $link]) }}" class="btn btn-warning" style="margin-bottom: 10px">Edit</a>
             @endcan

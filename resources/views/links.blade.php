@@ -46,9 +46,9 @@
         <div class="card" style="margin-bottom: 15px">
             <div class="card-body">
                 <h4 class="card-title">Your perfect shortened link</h4>
-                <h4 class="card-title"><a href="{{ $link->new_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->new_link }}</a></h4>
+                <h4 class="card-title"><a href="{{  URL::to($link->id) }}" class="btn btn-link" role="button" aria-pressed="true">{{  URL::to($link->id) }}</a></h4>
                 <p class="card-text">Your previous long link</p>
-                <p class="card-text"><a href="{{ $link->old_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->old_link }}</a></p>
+                <p class="card-text"><a href="{{ $link->long_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->long_link }}</a></p>
 
                 @can('view', $link)
                     <a href="{{ route('links.show', ['link' => $link]) }}" class="btn btn-info" style="margin-bottom: 10px">More info</a>

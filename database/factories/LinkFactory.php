@@ -24,10 +24,8 @@ class LinkFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => self::factoryForModel(User::class),
-            'old_link' => $this->faker->url,
-            'new_link' => Str::of($this->faker->url)->limit(15, ''),
-            'count' => rand(0, 150),
+            'user_id' => User::factory(),
+            'long_link' => $this->faker->url,
         ];
     }
 }

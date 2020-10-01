@@ -23,12 +23,11 @@ final class RedirectController
 //        $statistic->save();
 
         $link = Link::find($id);
-        $link->count++;
         $link->save();
 
         dispatch(new SaveStatistics())->onQueue('default');
 
-        return redirect($link->old_link);
+        return redirect($link->long_link);
     }
 }
 

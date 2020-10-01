@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Link;
 use App\Models\Statistic;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,7 +39,7 @@ class StatisticFactory extends Factory
         $device = $devices->random();
 
         return [
-            'user_id' => self::factoryForModel(User::class),
+            'link_id' => Link::factory(),
             'ip' => $this->faker->ipv4,
             'browser' => $browser,
             'engine' => $engine,

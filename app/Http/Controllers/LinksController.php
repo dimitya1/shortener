@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 final class LinksController
@@ -28,7 +29,7 @@ final class LinksController
         $validator = Validator::make(
             request()->all(),
             [
-                'old_link' => 'url|required|min:14|max:500',
+                'long_link' => 'url|required|min:14|max:500',
             ]
         );
 
@@ -39,17 +40,13 @@ final class LinksController
 
         $link = new Link();
         $link->user_id = auth()->id();
-        $link->old_link = request()->get('old_link');
+        $link->long_link = request()->get('long_link');
         $link->save();
-        $savedLink = Link::where('old_link', request()->get('old_link'))
-            ->orderBy('created_at', 'desc')->first();
-        $savedLink->new_link = 'http://localhost/' . $savedLink->id;
-        $savedLink->save();
 
         return redirect()
             ->route('links.index')
-            ->with('successful link shorten', "Link \"{$link->old_link}\"
-             was successfully shortened to \"{$savedLink->new_link}\"");
+            ->with('successful link shorten', "Link " . $link->long_link .
+             " was successfully shortened to " . URL::to($link->id));
     }
 
 
@@ -70,7 +67,7 @@ final class LinksController
         $validator = Validator::make(
             request()->all(),
             [
-                'old_link' => 'url|required|min:14|max:500',
+                'long_link' => 'url|required|min:14|max:500',
             ]
         );
 
@@ -79,12 +76,12 @@ final class LinksController
                 ->withErrors($validator->errors());
         }
 
-        if ($link->old_link === request()->get('old_link')) {
+        if ($link->long_link === request()->get('long_link')) {
             return redirect()
                 ->route('links.edit', ['link' => $link])
                 ->with('nothing to update', 'Nothing to update!');
         } else {
-            $link->old_link = request()->get('old_link');
+            $link->long_link = request()->get('long_link');
             $link->save();
         }
 

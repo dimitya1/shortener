@@ -24,13 +24,13 @@
         @csrf
 
         <div class="form-group">
-            @error('old_link')
+            @error('long_link')
             <div class="alert alert-danger" role="alert">
                 {{ $message }}
             </div>
             @enderror
-            <label for="old_link">Link to shorten</label>
-            <input type="old_link" name="old_link" class="form-control">
+            <label for="long_link">Link to shorten</label>
+            <input type="long_link" name="long_link" class="form-control">
         </div>
 
         <button type="submit" class="btn btn-primary">Shorten</button>

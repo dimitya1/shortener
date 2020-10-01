@@ -13,4 +13,9 @@ class Link extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function statistics()
+    {
+        return $this->hasMany(Statistic::class);
+    }
 }

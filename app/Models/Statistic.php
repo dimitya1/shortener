@@ -9,8 +9,8 @@ class Statistic extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function link()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Link::class);
     }
 }
