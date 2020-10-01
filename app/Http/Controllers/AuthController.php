@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 final class AuthController
 {
     public function login()
     {
-        return view('login-form');
+        $randomUser = User::all()->random();
+        return view('login-form', ['randomUser' => $randomUser]);
     }
 
 

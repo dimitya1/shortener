@@ -19,32 +19,36 @@
     </ul>
     <br>
 
+    @if($link->statistics->count() !== 0)
+        <h1><span class="badge badge-secondary">Used {{ $link->statistics->count() }} times</span></h1>
+    @else
+        <h1><span class="badge badge-secondary">No uses</span></h1>
+    @endif
 
-    <div class="card" style="margin-bottom: 20px">
-        <div class="card-body">
-{{--            @if($link->count !== 0)--}}
-{{--                <h1><span class="badge badge-secondary">Used {{ $link->count }} times</span></h1>--}}
-{{--            @else--}}
-{{--                <h1><span class="badge badge-secondary">No uses</span></h1>--}}
-{{--            @endif--}}
-            <h4 class="card-title">Your perfect shortened link</h4>
-            <h4 class="card-title"><a href="{{  URL::to($link->id) }}" class="btn btn-link" role="button" aria-pressed="true">{{  URL::to($link->id) }}</a></h4>
-            <p class="card-text">Your previous long link</p>
-            <p class="card-text"><a href="{{ $link->long_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->long_link }}</a></p>
-            @can('update', $link)
-                <a href="{{ route('links.edit', ['link' => $link]) }}" class="btn btn-warning" style="margin-bottom: 10px">Edit</a>
-            @endcan
-            @can('delete', $link)
-                <form method="POST" action="{{ route('links.destroy', ['link' => $link]) }}">
-                    @csrf
-                    @method('DELETE')
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            @endcan
-        </div>
-        <div class="card-footer text-muted">
-            Shortened {{ $link->created_at->diffForHumans() }}
-        </div>
-    </div>
+    @if($link->statistics->count() !== 0)
+    <h1 class="text-center">Statistics</h1>
 
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Ip address</th>
+            <th scope="col">Browser</th>
+            <th scope="col">Browser engine</th>
+            <th scope="col">Operating system</th>
+            <th scope="col">Device</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($statistics as $statistic)
+            <tr>
+                <td>{{ $statistic->ip }}</td>
+                <td>{{ $statistic->browser }}</td>
+                <td>{{ $statistic->engine }}</td>
+                <td>{{ $statistic->os }}</td>
+                <td>{{ $statistic->device }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    @endif
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SaveStatistics;
 use App\Models\Link;
+use HillelDerish\UAadapter\DonatjAdapter;
 use HillelDerish\UAadapter\HisorangeAdapter;
 
 final class RedirectController
@@ -14,7 +15,7 @@ final class RedirectController
 //        $uaParser->parse();
 //
 //        $statistic = new \App\Models\Statistic();
-//        $statistic->user_id = auth()->id();
+//        $statistic->link_id = $id;
 //        $statistic->ip = request()->ip();
 //        $statistic->browser = $uaParser->getBrowser() ?? null;
 //        $statistic->engine = $uaParser->getEngine() ?? null;
@@ -23,11 +24,13 @@ final class RedirectController
 //        $statistic->save();
 
         $link = Link::find($id);
-        $link->save();
 
-        dispatch(new SaveStatistics())->onQueue('default');
+        if ($link !== null) {
+            dispatch(new SaveStatistics($link->id, request()->ip()))->onQueue('default');
 
-        return redirect($link->long_link);
+            return redirect($link->long_link);
+        } else return redirect()->route('links.index')
+            ->with('link not found', 'Requested URL is not found!');
     }
 }
 

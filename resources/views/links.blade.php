@@ -35,6 +35,11 @@
             {{ Session::get('successful link delete') }}
         </div>
     @endif
+    @if(Session::has('link not found'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('link not found') }}
+        </div>
+    @endif
     @error('not allowed')
     <div class="alert alert-danger" role="alert">
         {{ $message }}
@@ -51,7 +56,7 @@
                 <p class="card-text"><a href="{{ $link->long_link }}" class="btn btn-link" role="button" aria-pressed="true">{{ $link->long_link }}</a></p>
 
                 @can('view', $link)
-                    <a href="{{ route('links.show', ['link' => $link]) }}" class="btn btn-info" style="margin-bottom: 10px">More info</a>
+                    <a href="{{ route('links.show', ['link' => $link]) }}" class="btn btn-info" style="margin-bottom: 10px">Statistics</a>
                 @endcan
                 <div class="w-100"></div>
                 @can('update', $link)
@@ -64,6 +69,9 @@
                         <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
                 @endcan
+            </div>
+            <div class="card-footer text-muted">
+                Shortened {{ $link->created_at->diffForHumans() }}
             </div>
         </div>
     @empty

@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Link::class);
     }
+
+    public function statistics()
+    {
+        return $this->hasManyThrough(Statistic::class, Link::class);
+    }
 }

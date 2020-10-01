@@ -36,6 +36,18 @@
             <input type="checkbox" name="remember" class="form-check-input" id="remember">
             <label class="form-check-label" for="remember">Remember me</label>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Log in</button>
     </form>
+    <br>
+    <br>
+    <h3>You can log in using the data below</h3>
+    <h5>Random user</h5>
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Password: password
+        </div>
+        <div class="card-body">
+            Email: {{ $randomUser->email }}
+        </div>
+    </div>
 @endsection

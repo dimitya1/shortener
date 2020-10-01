@@ -2,10 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Models\Link;
 use App\Models\Statistic;
-use App\Models\User;
 use HillelDerish\UAadapter\HisorangeAdapter;
-use http\Env\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,13 +15,17 @@ class SaveStatistics implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $linkId;
+    private $ip;
     /**
-     * Create a new job instance.
-     * @param Request $request
+     * SaveStatistics constructor.
+     * @param string $linkId
+     * @param string $ip
      */
-    public function __construct()
+    public function __construct(string $linkId, string $ip)
     {
-
+        $this->linkId = $linkId;
+        $this->ip = $ip;
     }
 
     /**
@@ -35,9 +38,9 @@ class SaveStatistics implements ShouldQueue
         $uaParser = new HisorangeAdapter();
         $uaParser->parse();
 
-        $statistic = new \App\Models\Statistic();
-        $statistic->user_id = auth()->id();
-        $statistic->ip = request()->ip();
+        $statistic = new Statistic();
+        $statistic->link_id = $this->linkId;
+        $statistic->ip = $this->ip;
         $statistic->browser = $uaParser->getBrowser() ?? null;
         $statistic->engine = $uaParser->getEngine() ?? null;
         $statistic->os = $uaParser->getOs() ?? null;

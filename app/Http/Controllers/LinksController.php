@@ -52,7 +52,8 @@ final class LinksController
 
     public function show(Link $link)
     {
-        return view('show', ['link' => $link]);
+        $statistics = $link->statistics()->orderBy('created_at', 'desc')->get();
+        return view('show', ['link' => $link, 'statistics' => $statistics]);
     }
 
 
